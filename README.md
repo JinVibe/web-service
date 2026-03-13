@@ -1,3 +1,35 @@
+# Dev-Log: Personal Tech Portfolio & Blog
+
+Flask 기반 개인 포트폴리오·기술 블로그. **세 가지 기능(페이지)**: 홈, 프로젝트, 연락처.
+
+## 프로젝트 설정 및 실행 (Lab Part 1)
+
+```bash
+# 가상환경 (선택)
+python -m venv venv
+# Windows: venv\Scripts\activate
+# pip install -r requirements.txt
+
+# 서버 실행 (둘 중 하나)
+flask run
+# 또는
+python run.py
+```
+
+**로컬 검증 (curl)**
+
+```bash
+curl http://127.0.0.1:5000/
+curl http://127.0.0.1:5000/home
+curl http://127.0.0.1:5000/projects
+curl http://127.0.0.1:5000/contact
+```
+
+- **엔드포인트**: `/` (홈 리다이렉트), `/home`, `/projects`, `/contact`
+- **구조**: `app.py`(flask run 진입), `app/` 패키지, Blueprint별 모듈화
+
+---
+
 ## 1. 기능적 요구사항 (Functional Requirements)
 
 작성하신 코드의 로직이 구현하는 '동작'들입니다.
