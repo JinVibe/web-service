@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}연락처{% endblock %}
+
+{% block content %}
+<h1>연락처</h1>
+<p>협업 제안이나 문의는 아래 채널로 연락해 주세요.</p>
+<ul style="list-style: none; padding: 0;">
+    {% for ch in channels %}
+    <li class="card" style="margin-bottom: 0.75rem;">
+        <a href="{{ ch.url }}" target="_blank" rel="noopener">{{ ch.label }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
