@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dev-Log{% endblock %} | 개인 포트폴리오</title>
+    <style>
+        :root {
+            --bg: #0f0f12;
+            --surface: #1a1a1f;
+            --text: #e8e8ed;
+            --muted: #8b8b9a;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        nav {
+            background: var(--surface);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        nav a {
+            color: var(--muted);
+            text-decoration: none;
+            margin-right: 1.5rem;
+        }
+        nav a:hover { color: var(--accent); }
+        main { max-width: 720px; margin: 0 auto; padding: 2rem; }
+        h1 { font-size: 1.75rem; margin-top: 0; }
+        a { color: var(--accent); }
+        a:hover { color: var(--accent-hover); }
+        .card {
+            background: var(--surface);
+            border-radius: 8px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .tag { display: inline-block; background: rgba(99,102,241,0.2); color: var(--accent); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.85rem; margin-right: 0.25rem; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('home.index') }}">홈</a>
+        <a href="{{ url_for('projects.list_projects') }}">프로젝트</a>
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
