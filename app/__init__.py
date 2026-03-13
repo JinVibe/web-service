@@ -11,8 +11,10 @@ def create_app(config=None):
 
     from app.blueprints.home import home_bp
     from app.blueprints.projects import projects_bp
+    from app.blueprints.contact import contact_bp
 
     app.register_blueprint(home_bp, url_prefix="")
     app.register_blueprint(projects_bp, url_prefix="")
+    app.register_blueprint(contact_bp, url_prefix="")
 
     return app
