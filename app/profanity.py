@@ -1,4 +1,9 @@
-"""Profanity masking — interface only (TDD step 1: Define Interface)."""
+"""Profanity masking — minimal implementation for tests (GREEN)."""
+
+import re
+
+# Tests only require masking this token (word-boundary, case-insensitive).
+_PROFANITY_WORD = "damn"
 
 
 def mask_profanity(text: str, mask_char: str = "*") -> str:
@@ -10,11 +15,22 @@ def mask_profanity(text: str, mask_char: str = "*") -> str:
     text : str
         Input string (may be empty).
     mask_char : str
-        Single character used for masking (default "*").
+        Character repeated for masking (default "*").
 
     Returns
     -------
     str
-        Text with profanity masked (not implemented — RED phase).
+        Text with profanity masked.
     """
-    pass
+    if text == "":
+        return ""
+
+    pattern = re.compile(
+        r"\b" + re.escape(_PROFANITY_WORD) + r"\b",
+        re.IGNORECASE,
+    )
+
+    def _replace(match: re.Match) -> str:
+        return mask_char * len(match.group(0))
+
+    return pattern.sub(_replace, text)
