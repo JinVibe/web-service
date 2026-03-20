@@ -5,7 +5,7 @@ from flask import Blueprint, render_template
 contact_bp = Blueprint("contact", __name__)
 
 CONTACT_CHANNELS = [
-    {"label": "Email", "url": "loonaticvibe@gmail.com", "icon": "email"},
+    {"label": "Email", "url": "mailto:loonaticvibe@gmail.com", "icon": "email"},
     {"label": "GitHub", "url": "https://github.com/JinVibe", "icon": "github"},
 ]
 
