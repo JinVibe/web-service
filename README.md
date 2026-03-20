@@ -2,13 +2,16 @@
 
 Flask 기반 개인 포트폴리오·기술 블로그. **세 가지 기능(페이지)**: 홈, 프로젝트, 연락처.
 
+**가상환경 + Pytest** 상세 절차는 [`docs/SETUP.md`](docs/SETUP.md)를 참고하세요.
+
 ## 프로젝트 설정 및 실행 (Lab Part 1)
 
 ```bash
-# 가상환경 (선택)
+# 가상환경 (권장) — 자세한 명령은 docs/SETUP.md
 python -m venv venv
-# Windows: venv\Scripts\activate
-# pip install -r requirements.txt
+# Windows: .\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+pip install -r requirements-dev.txt   # Pytest 등 개발 의존성
 
 # 서버 실행 (둘 중 하나)
 flask run
@@ -27,6 +30,37 @@ curl http://127.0.0.1:5000/contact
 
 - **엔드포인트**: `/` (홈 리다이렉트), `/home`, `/projects`, `/contact`
 - **구조**: `app.py`(flask run 진입), `app/` 패키지, Blueprint별 모듈화
+
+---
+
+## TDD & Pytest (AI Assistant 협업)
+
+**목표**: README의 기능 명세(R1–R3)를 **테스트로 먼저 고정**하고, 구현은 테스트가 초록일 때까지 맞춘다.
+
+| 단계 | 누가 | 내용 |
+| --- | --- | --- |
+| **1. Setup** | 개발자 | `docs/SETUP.md`대로 venv 생성 후 `pip install -r requirements-dev.txt` → Pytest + `tests/conftest.py` |
+| **2. Branch** | 개발자 | `git checkout -b test` (기능/테스트 작업 브랜치) |
+| **3. RED** | 사람(명세) | `tests/test_web_routes.py`에 **실패할 테스트**를 먼저 작성 (기대 응답·본문 문자열) |
+| **4. GREEN** | AI/페어 | 라우트·템플릿 등 **최소 구현**으로 `pytest` 통과 |
+| **5. REFACTOR** | 공동 | 중복 제거·이름 정리 등 (테스트는 계속 통과) |
+| **6. 검증** | 개발자 | `pytest` + 브라우저에서 `/home`, `/projects`, `/contact` 확인 |
+| **7. Push** | 개발자 | PR 후 `main`에 머지 |
+
+```bash
+# 테스트 전용 의존성
+pip install -r requirements-dev.txt
+
+# 전체 테스트
+pytest
+
+# 한 파일만
+pytest tests/test_web_routes.py -v
+```
+
+- **RED → GREEN**: 새 기능을 넣을 때는 **테스트 추가(RED) → 구현(GREEN)** 순서를 지키면 TDD 사이클이 된다.
+- **Web routes**: `client.get("/경로")`로 서버 없이 응답 코드·HTML 일부를 검증한다.
+- **Client-side(네비)**: `url_for`로 링크 대상 엔드포인트가 존재하는지 검증한다.
 
 ---
 
