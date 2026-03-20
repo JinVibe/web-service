@@ -41,7 +41,7 @@ curl http://127.0.0.1:5000/contact
 | --- | --- | --- |
 | **1. Setup** | 개발자 | `docs/SETUP.md`대로 venv 생성 후 `pip install -r requirements-dev.txt` → Pytest + `tests/conftest.py` |
 | **2. Branch** | 개발자 | `git checkout -b test` (기능/테스트 작업 브랜치) |
-| **3. RED** | 사람(명세) | `tests/test_web_routes.py`에 **실패할 테스트**를 먼저 작성 (기대 응답·본문 문자열) |
+| **3. RED** | 사람(명세) | 예: `tests/test_app.py`에 `mask_profanity` 등 **실패할 테스트**를 먼저 작성 (`tests/test_web_routes.py`는 라우트용) |
 | **4. GREEN** | AI/페어 | 라우트·템플릿 등 **최소 구현**으로 `pytest` 통과 |
 | **5. REFACTOR** | 공동 | 중복 제거·이름 정리 등 (테스트는 계속 통과) |
 | **6. 검증** | 개발자 | `pytest` + 브라우저에서 `/home`, `/projects`, `/contact` 확인 |

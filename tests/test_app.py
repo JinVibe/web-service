@@ -1,71 +1,43 @@
 """
-RED 단계: 사용자 로그인 (User Login)
+RED 단계: 비속어 마스킹 (mask_profanity)
 
-실제 로그인 라우트·세션 처리 코드는 아직 없음.
-구현 후 GREEN 단계에서 이 테스트들이 통과하도록 맞춘다.
+워크플로우 (AI 협업 TDD):
+  1. Define Interface — app/profanity.py 에 시그니처만 정의
+  2. Generate Tests — 요구사항 기반 테스트 작성·검토 후 본 파일에 저장
+  3. Implement Code — mask_profanity 구현으로 GREEN
+  4. Verify & Refactor — 코드 리뷰·품질 개선 후 승인
 
-실행 시 기대: 이 파일의 테스트는 모두 실패(404 등)해야 함.
+현재: 구현 없음 → 이 파일의 테스트는 반드시 실패해야 함 (RED).
 """
 
-import pytest
+from app.profanity import mask_profanity
 
 
-# --- 명세 상수 (구현 시 앱과 맞출 것) ---
-LOGIN_PATH = "/login"
-LOGOUT_PATH = "/logout"
-DEMO_USERNAME = "demo"
-DEMO_PASSWORD = "correct-password"
+def test_mask_profanity_empty_string():
+    """빈 문자열은 빈 문자열을 반환한다."""
+    assert mask_profanity("") == ""
 
 
-def test_login_page_renders_form(client):
-    """GET /login: 로그인 폼이 200으로 표시되고 username/password 입력 필드가 있다."""
-    response = client.get(LOGIN_PATH)
-    assert response.status_code == 200
-    html = response.data.decode("utf-8", errors="replace").lower()
-    assert "username" in html or "user" in html
-    assert "password" in html
+def test_mask_profanity_no_profanity_unchanged():
+    """비속어가 없으면 원문과 동일하다."""
+    assert mask_profanity("hello world") == "hello world"
 
 
-def test_login_post_valid_redirects_and_sets_session(client):
-    """POST /login (올바른 자격증명): 리다이렉트 + 세션에 로그인 사용자 식별자가 저장된다."""
-    response = client.post(
-        LOGIN_PATH,
-        data={"username": DEMO_USERNAME, "password": DEMO_PASSWORD},
-        follow_redirects=False,
-    )
-    assert response.status_code in (302, 303), "expected redirect on successful login"
-    location = response.location or ""
-    assert "/home" in location or "/dashboard" in location.lower()
-
-    with client.session_transaction() as sess:
-        assert "user_id" in sess or "username" in sess
+def test_mask_profanity_masks_lowercase_word():
+    """명세 비속어 'damn'은 길이만큼 mask_char로 치환된다."""
+    assert mask_profanity("damn") == "****"
 
 
-def test_login_post_invalid_shows_error(client):
-    """POST /login (잘못된 비밀번호): 로그인 페이지에 오류 메시지가 보인다."""
-    response = client.post(
-        LOGIN_PATH,
-        data={"username": DEMO_USERNAME, "password": "wrong-password"},
-        follow_redirects=True,
-    )
-    assert response.status_code == 200
-    html = response.data.decode("utf-8", errors="replace")
-    assert any(
-        phrase in html
-        for phrase in ("잘못", "오류", "Invalid", "failed", "incorrect")
-    )
+def test_mask_profanity_case_insensitive():
+    """대소문자와 무관하게 동일 비속어를 마스킹한다."""
+    assert mask_profanity("Damn") == "****"
 
 
-def test_logout_clears_session_and_redirects(client):
-    """GET /logout: 세션이 비워지고 홈 등으로 리다이렉트된다."""
-    # 로그인 구현 전에는 세션 없이도 /logout 응답 자체가 명세대로여야 함 (RED에서는 404로 실패)
-    client.post(
-        LOGIN_PATH,
-        data={"username": DEMO_USERNAME, "password": DEMO_PASSWORD},
-        follow_redirects=True,
-    )
-    response = client.get(LOGOUT_PATH, follow_redirects=False)
-    assert response.status_code in (302, 303)
+def test_mask_profanity_within_sentence_all_occurrences():
+    """문장 안에서 등장하는 모든 비속어를 치환하고 나머지는 유지한다."""
+    assert mask_profanity("oh damn it") == "oh **** it"
 
-    with client.session_transaction() as sess:
-        assert not sess.get("user_id") and not sess.get("username")
+
+def test_mask_profanity_custom_mask_char():
+    """mask_char를 '#'로 주면 해당 문자로 길이만큼 치환한다."""
+    assert mask_profanity("damn", mask_char="#") == "####"

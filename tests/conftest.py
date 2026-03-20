@@ -8,8 +8,7 @@ from app import create_app
 @pytest.fixture
 def app():
     """Flask app with TESTING=True for isolated test runs."""
-    application = create_app({"TESTING": True})
-    return application
+    return create_app({"TESTING": True})
 
 
 @pytest.fixture
