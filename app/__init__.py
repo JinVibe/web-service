@@ -2,6 +2,8 @@
 
 from flask import Flask
 
+from app.bootstrap import register_blueprints
+
 
 def create_app(config=None):
     """Create and configure the Flask application."""
@@ -9,12 +11,6 @@ def create_app(config=None):
     if config:
         app.config.update(config)
 
-    from app.blueprints.home import home_bp
-    from app.blueprints.projects import projects_bp
-    from app.blueprints.contact import contact_bp
-
-    app.register_blueprint(home_bp, url_prefix="")
-    app.register_blueprint(projects_bp, url_prefix="")
-    app.register_blueprint(contact_bp, url_prefix="")
+    register_blueprints(app)
 
     return app
