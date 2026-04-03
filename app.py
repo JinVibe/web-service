@@ -1,10 +1,10 @@
 """
-WSGI/CLI entry: exposes ``app`` for ``flask run`` and hosting docs.
+Lab / legacy CLI entry: re-exports the same ``app`` as :mod:`wsgi`.
 
-Application factory and blueprints live under the ``app`` package (``app/__init__.py``).
-Domain helpers (e.g. profanity masking) live in sibling modules such as ``app.profanity``.
+권장 진입은 ``wsgi.py`` (또는 ``flask --app wsgi run``) — 패키지 ``app/`` 과 이름 혼동을 줄인다.
+팩토리·Blueprint는 ``app`` 패키지, 도메인 헬퍼는 ``app.profanity`` 등에 둔다.
 """
 
-from app import create_app
+from wsgi import app
 
-app = create_app()
+__all__ = ["app"]

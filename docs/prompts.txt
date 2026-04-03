@@ -55,7 +55,7 @@ Dev-Log 웹 서비스 — AI 협업 시 사용한 주요 지시사항 & 프롬�
 
 3.1 구현
   - README 기반 Flask + Blueprint(home / projects / contact)
-  - `app.py`(flask run), `run.py`, 템플릿·네비 `url_for` 정합
+  - 권장 진입 `wsgi.py`, Lab 호환 `app.py` 래퍼, `run.py`, 템플릿·네비 `url_for` 정합
 
 3.2 Git / GitHub
   - 머지 충돌 시: main 갱신 → feature 머지 → 충돌 파일 수동 해결 → 커밋·푸시
@@ -98,3 +98,85 @@ Dev-Log 웹 서비스 — AI 협업 시 사용한 주요 지시사항 & 프롬�
 ================================================================================
 (본 파일은 AI 협업 세션 요약이며, 실제 대화 전문은 채팅 로그를 참고한다.)
 ================================================================================
+
+[TDD 워크플로우 프롬프트] 
+1. RED: 환경 설정 및 실패하는 테스트 작성
+"현재 프로젝트에 가상환경과 Pytest 환경을 설정해줘. 그리고 [구현할 기능명, 예: 사용자 로그인]을 위한 **실패하는 테스트 코드(RED)**를 tests/test_app.py에 작성해줘. 아직 실제 코드가 없으므로 테스트는 반드시 실패해야 해."
+
+2. GREEN: 최소 기능 구현 (통과)
+"방금 작성한 테스트 코드를 통과시키기 위해 필요한 최소한의 기능만 app.py에 구현해줘. 다른 복잡한 로직은 생략하고 오직 테스트가 **GREEN(Pass)**이 되는 것에만 집중해줘."
+
+3. REFACTOR: 코드 품질 개선
+"테스트가 통과했으니, 이제 app.py의 코드를 리팩토링할 차례야. 가독성과 확장성을 고려해서 구조를 개선해주고, 리팩토링 후에도 여전히 테스트가 통과하는지 확인해줘."
+
+4. REVIEW: 전체 구조 및 검증 확인
+"전체 웹 라우트와 클라이언트 사이드 연동 로직을 종합적으로 검토해줘. 13시 업로드를 위해 파일 구조가 깔끔한지, GitHub에 푸시하기 전 보안상 결함이나 빠진 의존성 파일(requirements.txt)은 없는지 최종 체크해줘."
+
+5. DOCUMENT: 프롬프트 로그 추출
+"오늘 우리가 이 웹 서비스를 만들기 위해 사용한 주요 지시사항과 프롬프트 엔지니어링 전략을 요약해서 docs/prompts.txt 파일로 저장해줘. 어떤 논리로 AI와 협업했는지 명확하게 기록해줘."
+
+[1]
+Goal: Implement My Web Service using TDD cycle with AI Assistant collaboration.
+1. Setup Pytest environment.
+2. Create branch: test
+3. TADD: RED (Human defines spec) ➔ GREEN (AI implements)
+4. Continue with Web routes, client-side verification.
+5. Push GitHub
+
+여기에 이거 적용해야 하는데 하나하나 설명해주면서 코드 바꿔줘
+
+[2]
+현재 프로젝트에 가상환경과 Pytest 환경을 설정해줘. 그리고 [구현할 기능명, 예: 사용자 로그인]을 위한 실패하는 테스트 코드(RED)를 tests/test_app.py에 작성해줘. 아직 실제 코드가 없으므로 테스트는 반드시 실패해야 해
+
+[3]
+방금 작성한 테스트 코드를 통과시키기 위해 필요한 최소한의 기능만 app.py에 구현해줘. 다른 복잡한 로직은 생략하고 오직 테스트가 GREEN(Pass)이 되는 것에만 집중해줘.
+
+[4]
+로그인 기능 말고 
+1. Define Interface: defines only the empty function signature: def
+mask_profanity(...)
+2. Generate Tests: prompts the AI to generate test cases based on requirements
+and saves them to test_profanity.py after review.
+3. Implement Code: commands the AI to implement the mask_profanity function
+with the goal of "making all failing tests pass."
+4. Verify & Refactor: reviews the AI-generated code, improves its quality, and gives
+final approval
+
+[5]
+이거에 대해서 "현재 프로젝트에 가상환경과 Pytest 환경을 설정해줘. 그리고 [구현할 기능명, 예: 사용자 로그인]을 위한 실패하는 테스트 코드(RED)를 tests/test_app.py에 작성해줘. 아직 실제 코드가 없으므로 테스트는 반드시 실패해야 해." 다시해주라
+
+[6]
+"방금 작성한 테스트 코드를 통과시키기 위해 필요한 최소한의 기능만 app.py에 구현해줘. 다른 복잡한 로직은 생략하고 오직 테스트가 GREEN(Pass)이 되는 것에만 집중해줘."
+
+[7]
+"테스트가 통과했으니, 이제 app.py의 코드를 리팩토링할 차례야. 가독성과 확장성을 고려해서 구조를 개선해주고, 리팩토링 후에도 여전히 테스트가 통과하는지 확인해줘."
+
+[8]
+"전체 웹 라우트와 클라이언트 사이드 연동 로직을 종합적으로 검토해줘. 13시 업로드를 위해 파일 구조가 깔끔한지, GitHub에 푸시하기 전 보안상 결함이나 빠진 의존성 파일(requirements.txt)은 없는지 최종 체크해줘."
+
+[9]
+"오늘 우리가 이 웹 서비스를 만들기 위해 사용한 주요 지시사항과 프롬프트 엔지니어링 전략을 요약해서 docs/prompts.txt 파일로 저장해줘. 어떤 논리로 AI와 협업했는지 명확하게 기록해줘."
+
+[10]
+[Feature] 
+
+## 기능 설명
+원하는 기능을 한 줄로 요약해 주세요.
+
+## 상세 설명
+기능에 대한 구체적인 설명을 적어 주세요.
+
+## 동기
+이 기능이 왜 필요한지, 어떤 문제를 해결하는지 적어 주세요.
+
+## 대안 (선택)
+고려했던 다른 방식이 있다면 적어 주세요.
+
+## 추가 맥락
+스크린샷, 목업, 관련 이슈 등 추가할 만한 내용이 있으면 적어 주세요.
+
+
+이거 기반으로 한 것을 잘 적어줘
+
+[11]
+test 브랜치를 메인에 머지하려는데 타이틀과 설명부를 적어줘
