@@ -39,6 +39,7 @@ curl http://127.0.0.1:5000/contact
 
 - **엔드포인트**: `/` (홈 리다이렉트), `/home`, `/projects`, `/contact`
 - **구조**: `wsgi.py`(권장 진입), `app.py`(Lab 호환 래퍼), `app/` 패키지, Blueprint별 모듈화
+- **콘텐츠 데이터**: 프로젝트·연락처 목록은 코드가 아니라 `app/data/projects.json`, `app/data/contact.json`에서 읽는다 (`app/site_data.py`).
 
 ---
 
@@ -183,7 +184,7 @@ pytest tests/test_web_routes.py -v
 | --- | --- |
 | **입력** | GET `/projects` |
 | **출력** | HTML (200). 포함 내용: 프로젝트 카드 목록(제목, 기술 스택 태그, 상세 설명) |
-| **데이터** | 프로젝트별: `title`, `stack[]`, `description` (현재 앱 내 상수로 제공, 추후 DB 연동 가능) |
+| **데이터** | 프로젝트별: `title`, `stack[]`, `description` (`app/data/projects.json`, 추후 DB 연동 가능) |
 | **화면 요소** | 목록 제목, 카드 단위 표시, 네비게이션 |
 
 #### F4: 연락처
@@ -192,7 +193,7 @@ pytest tests/test_web_routes.py -v
 | --- | --- |
 | **입력** | GET `/contact` |
 | **출력** | HTML (200). 포함 내용: 연락 채널 목록(라벨, URL) |
-| **데이터** | 채널별: `label`, `url` (예: Email → mailto:, GitHub → https://github.com/...) |
+| **데이터** | 채널별: `label`, `url` (`app/data/contact.json`; 예: Email → mailto:, GitHub → https://...) |
 | **화면 요소** | 제목, 채널 링크 목록, 네비게이션 |
 | **비고** | 외부 URL은 `target="_blank"`, `rel="noopener"` 권장 |
 

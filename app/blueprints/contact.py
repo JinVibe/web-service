@@ -2,15 +2,12 @@
 
 from flask import Blueprint, render_template
 
-contact_bp = Blueprint("contact", __name__)
+from app.site_data import load_contact_channels
 
-CONTACT_CHANNELS = [
-    {"label": "Email", "url": "mailto:loonaticvibe@gmail.com", "icon": "email"},
-    {"label": "GitHub", "url": "https://github.com/JinVibe", "icon": "github"},
-]
+contact_bp = Blueprint("contact", __name__)
 
 
 @contact_bp.route("/contact")
 def index():
     """Display contact channels for collaboration inquiries."""
-    return render_template("contact.html", channels=CONTACT_CHANNELS)
+    return render_template("contact.html", channels=load_contact_channels())
