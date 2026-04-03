@@ -39,7 +39,7 @@ curl http://127.0.0.1:5000/contact
 ```
 
 - **엔드포인트**: `/` (홈 리다이렉트), `/home`, `/projects`, `/contact`
-- **구조**: `wsgi.py`(권장 진입), `app.py`(Lab 호환 래퍼), `app/` 패키지, `app/bootstrap.py`에서 Blueprint 등록, 연락처 표시 규칙은 `app/contact_display.py`, 기능별 `app/blueprints/`
+- **구조**: `wsgi.py`(권장 진입), `app.py`(Lab 호환 래퍼), `app/` 패키지, `app/bootstrap.py`에서 Blueprint 등록, 연락처 표시 규칙은 `app/contact_display.py`, 공통 스타일은 `app/static/css/main.css`, 기능별 `app/blueprints/`
 - **콘텐츠 데이터**: 프로젝트·연락처 목록은 `app/data/projects.json`, `app/data/contact.json`에서 읽는다 (`app/site_data.py`). 비속어 마스킹 단어 목록은 `app/data/profanity_words.json` (`mask_profanity`).
 
 ---
