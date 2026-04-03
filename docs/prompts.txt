@@ -55,7 +55,7 @@ Dev-Log 웹 서비스 — AI 협업 시 사용한 주요 지시사항 & 프롬�
 
 3.1 구현
   - README 기반 Flask + Blueprint(home / projects / contact)
-  - `app.py`(flask run), `run.py`, 템플릿·네비 `url_for` 정합
+  - 권장 진입 `wsgi.py`, Lab 호환 `app.py` 래퍼, `run.py`, 템플릿·네비 `url_for` 정합
 
 3.2 Git / GitHub
   - 머지 충돌 시: main 갱신 → feature 머지 → 충돌 파일 수동 해결 → 커밋·푸시
