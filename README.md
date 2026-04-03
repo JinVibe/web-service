@@ -38,7 +38,7 @@ curl http://127.0.0.1:5000/contact
 ```
 
 - **엔드포인트**: `/` (홈 리다이렉트), `/home`, `/projects`, `/contact`
-- **구조**: `wsgi.py`(권장 진입), `app.py`(Lab 호환 래퍼), `app/` 패키지, `app/bootstrap.py`에서 Blueprint 등록, 기능별 `app/blueprints/`
+- **구조**: `wsgi.py`(권장 진입), `app.py`(Lab 호환 래퍼), `app/` 패키지, `app/bootstrap.py`에서 Blueprint 등록, 연락처 표시 규칙은 `app/contact_display.py`, 기능별 `app/blueprints/`
 - **콘텐츠 데이터**: 프로젝트·연락처 목록은 코드가 아니라 `app/data/projects.json`, `app/data/contact.json`에서 읽는다 (`app/site_data.py`).
 
 ---
@@ -195,7 +195,7 @@ pytest tests/test_web_routes.py -v
 | **출력** | HTML (200). 포함 내용: 연락 채널 목록(라벨, URL) |
 | **데이터** | 채널별: `label`, `url` (`app/data/contact.json`; 예: Email → mailto:, GitHub → https://...) |
 | **화면 요소** | 제목, 채널 링크 목록, 네비게이션 |
-| **비고** | 외부 URL은 `target="_blank"`, `rel="noopener"` 권장 |
+| **비고** | http(s) 링크는 `app/contact_display.py`에서 새 탭·`rel` 여부를 결정, 템플릿은 플래그만 사용 |
 
 ### 3.3 공통 화면 요구사항
 
