@@ -46,7 +46,8 @@ pytest tests/test_app.py -v
 ## 3. 앱 실행 (참고)
 
 ```bash
-flask run
+flask --app wsgi run
 # 또는
 python run.py
+# 디버그(리로더 등): FLASK_DEBUG=1 python run.py  — 기본은 debug 비활성
 ```

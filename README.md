@@ -18,6 +18,7 @@ flask --app wsgi run
 # 또는 환경 변수: FLASK_APP=wsgi.py 후 flask run
 # Lab 호환: FLASK_APP=app.py (app.py는 wsgi.app 과 동일 객체 재노출)
 python run.py
+# 로컬에서 디버그 리로더·상세 오류: FLASK_DEBUG=1 python run.py  (기본은 debug OFF)
 ```
 
 **진입점 정리**
