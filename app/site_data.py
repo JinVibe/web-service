@@ -30,3 +30,11 @@ def load_contact_channels() -> list[dict[str, Any]]:
     if not isinstance(raw, list):
         return []
     return [c for c in raw if isinstance(c, dict)]
+
+
+def load_profanity_words() -> tuple[str, ...]:
+    """Tokens to mask (whole-word, case-insensitive); see ``profanity_words.json``."""
+    raw = _load_json("profanity_words.json", [])
+    if not isinstance(raw, list):
+        return ()
+    return tuple(w.strip() for w in raw if isinstance(w, str) and w.strip())
