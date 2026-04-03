@@ -1,0 +1,12 @@
+[
+  {
+    "label": "Email",
+    "url": "mailto:loonaticvibe@gmail.com",
+    "icon": "email"
+  },
+  {
+    "label": "GitHub",
+    "url": "https://github.com/JinVibe",
+    "icon": "github"
+  }
+]
