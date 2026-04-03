@@ -1,7 +1,7 @@
 """
 Profanity masking for user-visible text.
 
-New words can be added to ``PROFANITY_WORDS`` without changing ``mask_profanity`` logic.
+Word list is loaded from ``app/data/profanity_words.json`` (see ``site_data.load_profanity_words``).
 """
 
 from __future__ import annotations
@@ -9,8 +9,7 @@ from __future__ import annotations
 import re
 from typing import Iterable, Match
 
-# Whole-word, case-insensitive matches only. Extend this tuple as requirements grow.
-PROFANITY_WORDS: tuple[str, ...] = ("damn",)
+from app.site_data import load_profanity_words
 
 
 def _compile_word_pattern(word: str) -> re.Pattern[str]:
@@ -54,4 +53,4 @@ def mask_profanity(text: str, mask_char: str = "*") -> str:
     if not text:
         return ""
 
-    return _mask_words(text, PROFANITY_WORDS, mask_char)
+    return _mask_words(text, load_profanity_words(), mask_char)
