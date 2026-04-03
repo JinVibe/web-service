@@ -10,11 +10,20 @@ python -m venv venv
 # Windows: venv\Scripts\activate
 # pip install -r requirements.txt
 
-# 서버 실행 (둘 중 하나)
-flask run
-# 또는
+# 서버 실행 (권장: 진입점 wsgi — 패키지 app/ 과 이름 충돌 방지)
+flask --app wsgi run
+# 또는 환경 변수: FLASK_APP=wsgi.py 후 flask run
+# Lab 호환: FLASK_APP=app.py (app.py는 wsgi.app 과 동일 객체 재노출)
 python run.py
 ```
+
+**진입점 정리**
+
+| 파일 | 역할 |
+| --- | --- |
+| **`app/`** (패키지) | `create_app`, Blueprint, 템플릿 등 애플리케이션 코드 |
+| **`wsgi.py`** | 권장: `app` 인스턴스 노출 (Docker·`FLASK_APP` 기본) |
+| **`app.py`** | Lab/기존 예제 호환: `wsgi`와 동일한 `app` 재노출 |
 
 **로컬 검증 (curl)**
 
@@ -26,7 +35,7 @@ curl http://127.0.0.1:5000/contact
 ```
 
 - **엔드포인트**: `/` (홈 리다이렉트), `/home`, `/projects`, `/contact`
-- **구조**: `app.py`(flask run 진입), `app/` 패키지, Blueprint별 모듈화
+- **구조**: `wsgi.py`(권장 진입), `app.py`(Lab 호환 래퍼), `app/` 패키지, Blueprint별 모듈화
 
 ---
 

@@ -1,5 +1,10 @@
-"""Flask app entry for 'flask run' and Lab (/, /home endpoints)."""
+"""
+Lab / legacy CLI entry: re-exports the same ``app`` as :mod:`wsgi`.
 
-from app import create_app
+Prefer ``wsgi.py`` (or ``flask --app wsgi run``) to avoid confusion with the
+``app`` package directory.
+"""
 
-app = create_app()
+from wsgi import app
+
+__all__ = ["app"]
