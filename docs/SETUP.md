@@ -51,3 +51,27 @@ flask --app wsgi run
 python run.py
 # 디버그(리로더 등): FLASK_DEBUG=1 python run.py  — 기본은 debug 비활성
 ```
+
+## 4. Sphinx 문서 (HTML)
+
+`requirements-dev.txt`에 `sphinx`, `sphinx-rtd-theme`이 포함되어 있습니다.
+
+```bash
+# 프로젝트 루트에서 venv 활성화 후
+pip install -r requirements-dev.txt
+
+# 문서 빌드 (출력: docs/build/html/)
+cd docs
+sphinx-build -M html source build
+```
+
+Windows에서는 `docs` 폴더에서 `.\make.bat html`도 동일하게 동작합니다. 생성된 `docs/build/html/index.html`을 브라우저로 열면 됩니다.
+
+`app` 패키지 구조가 바뀌면 **프로젝트 루트가 아니라 `docs` 폴더에서** 아래처럼 다시 생성할 수 있습니다. (`sphinx-apidoc`는 `pip install sphinx` 후 PATH에 있는 명령 이름입니다. `docs/sphinx-apidoc` 같은 경로는 없습니다.)
+
+```bash
+cd docs
+sphinx-apidoc -o source -f -M ../app
+```
+
+이후 `source/index.rst`의 `toctree`에 `modules`가 포함되어 있는지 확인하세요.
