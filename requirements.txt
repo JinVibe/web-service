@@ -1,1 +1,4 @@
 Flask>=3.0.0
+flasgger>=0.9.7.1
+# jsonschema 4.18+ pulls rpds-py (Rust); pin for simpler pip installs on Windows
+jsonschema>=4.0.0,<4.18
