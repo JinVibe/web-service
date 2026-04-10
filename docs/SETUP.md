@@ -83,3 +83,16 @@ sphinx-apidoc -o source -f -M ../app
 1. GitHub 저장소 **Settings → Pages**
 2. **Build and deployment** → **Source**를 **GitHub Actions**로 선택
 3. `main`에 머지/푸시 후 **Actions** 탭에서 워크플로가 성공하면 Pages URL(보통 `https://<user>.github.io/<repo>/`)에서 문서를 볼 수 있습니다. (첫 배포 후 1~2분 걸릴 수 있음)
+
+## 5. Flasgger (Swagger UI)
+
+`requirements.txt`에 `flasgger`가 포함되어 있습니다. 앱 실행 후 브라우저에서 다음을 엽니다.
+
+| URL | 설명 |
+| --- | --- |
+| `/apidocs/` | Swagger UI — 엔드포인트 설명 및 **Try it out** 으로 JSON API 호출 |
+| `/apispec_1.json` | 병합된 OpenAPI(Swagger 2.0) 스펙 |
+
+JSON API 예시: `GET /api/projects`, `GET /api/contact/channels`. OpenAPI(Swagger 2.0) 조각은 `app/blueprints/api.py` 뷰 **docstring** 안에서 `---` 아래 YAML로 적혀 있습니다. Sphinx HTML 문서를 빌드할 때는 `docs/source/conf.py`의 훅이 `---` 이후를 잘라 내어 reST 오류를 막습니다.
+
+테스트나 배포에서 Swagger를 끄려면 앱 설정에 `DISABLE_SWAGGER: True`를 넘기면 됩니다.

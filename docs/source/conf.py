@@ -37,3 +37,22 @@ intersphinx_mapping = {
 autodoc_member_order = "bysource"
 napoleon_google_docstring = True
 napoleon_numpy_docstring = False
+
+
+def _strip_flasgger_openapi_block(
+    app,
+    what,
+    name,
+    obj,
+    options,
+    lines: list[str],
+) -> None:
+    """Flasgger YAML lives after a ``---`` line; strip it so docutils does not parse it as reST."""
+    for i, line in enumerate(lines):
+        if line.strip() == "---":
+            del lines[i:]
+            break
+
+
+def setup(app):
+    app.connect("autodoc-process-docstring", _strip_flasgger_openapi_block)

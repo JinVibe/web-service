@@ -9,6 +9,14 @@ app.blueprints package
 Submodules
 ----------
 
+app.blueprints.api module
+-------------------------
+
+.. automodule:: app.blueprints.api
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 app.blueprints.contact module
 -----------------------------
 
