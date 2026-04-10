@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-label="Swagger UI ø¬ô0">
+  <rect width="800" height="450" rx="12" fill="#0f0f12"/>
+  <rect x="24" y="20" width="752" height="36" rx="8" fill="#1a1a1f" stroke="#2a2a32"/>
+  <circle cx="44" cy="38" r="6" fill="#ff5f57"/><circle cx="64" cy="38" r="6" fill="#febc2e"/><circle cx="84" cy="38" r="6" fill="#28c840"/>
+  <rect x="120" y="28" width="520" height="20" rx="6" fill="#0f0f12" stroke="#2a2a32"/>
+  <text x="132" y="42" fill="#6366f1" font-family="Segoe UI,system-ui,sans-serif" font-size="11">127.0.0.1:5000/apidocs/</text>
+  <rect x="24" y="72" width="220" height="354" rx="8" fill="#1a1a1f" stroke="#2a2a32"/>
+  <text x="40" y="110" fill="#e8e8ed" font-family="Segoe UI,system-ui,sans-serif" font-size="14" font-weight="600">Dev-Log API</text>
+  <text x="40" y="145" fill="#89bf04" font-family="Segoe UI,system-ui,sans-serif" font-size="12">GET /api/projects</text>
+  <text x="40" y="170" fill="#89bf04" font-family="Segoe UI,system-ui,sans-serif" font-size="12">GET /api/contact/channels</text>
+  <rect x="260" y="72" width="516" height="354" rx="8" fill="#fafafa"/>
+  <text x="280" y="120" fill="#3b4151" font-family="Segoe UI,system-ui,sans-serif" font-size="16" font-weight="600">Try it out</text>
+  <rect x="280" y="140" width="200" height="28" rx="4" fill="#4990e2"/>
+  <text x="310" y="159" fill="#fff" font-family="Segoe UI,system-ui,sans-serif" font-size="12">Execute</text>
+  <text x="280" y="210" fill="#3b4151" font-family="Segoe UI,system-ui,sans-serif" font-size="13">Response body · application/json</text>
+</svg>

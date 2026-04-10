@@ -1,0 +1,19 @@
+1.
+- Identify at least five code smells in my code, list them, and explain why each one is considered a smell.
+- Create branch: refactor
+- Ask an AI assistant to propose multiple refactoring strategies for the identified smells. Select one strategy and use it to actually improve of the smells.
+- Submit via a GitHub Pull Request: 
+  : Identified Code Smells / AI Collaboration Log / Decision & Review Process / improved design
+
+* Upload Files (~ Today 13:00)
+  - *.py (Upload multiple source code files in a zipped format.)
+  - prompt text files 
+
+코드를 바로 바꾸지는 말고 리팩토링을 하는데 각 리팩토링에 대한 pr을 만들어야 한다네 바꿀만한 지점 7개 정도 추천해줘
+
+2. 
+Identify at least five code smells in my code, list them, and explain why each one is considered a smell.•Create branch: refactor•Ask an AI assistant to propose multiple refactoring strategies for the identified smells. Select one strategy and use it to actually improveof the smells.•Submit via a GitHub Pull Request: -Identified Code Smells / AI Collaboration Log / Decision & Review Process/improved design
+이것도 반영해서 PR1부터 pr 제목과 내용을 나한테 주고 내가 코드를 고치라고 하면 고쳐줘
+
+3. 
+PR 1~7까지 템플릿을 부탁해

@@ -51,3 +51,48 @@ flask --app wsgi run
 python run.py
 # 디버그(리로더 등): FLASK_DEBUG=1 python run.py  — 기본은 debug 비활성
 ```
+
+## 4. Sphinx 문서 (HTML)
+
+`requirements-dev.txt`에 `sphinx`, `sphinx-rtd-theme`이 포함되어 있습니다.
+
+```bash
+# 프로젝트 루트에서 venv 활성화 후
+pip install -r requirements-dev.txt
+
+# 문서 빌드 (출력: docs/build/html/)
+cd docs
+sphinx-build -M html source build
+```
+
+Windows에서는 `docs` 폴더에서 `.\make.bat html`도 동일하게 동작합니다. 생성된 `docs/build/html/index.html`을 브라우저로 열면 됩니다.
+
+`app` 패키지 구조가 바뀌면 **프로젝트 루트가 아니라 `docs` 폴더에서** 아래처럼 다시 생성할 수 있습니다. (`sphinx-apidoc`는 `pip install sphinx` 후 PATH에 있는 명령 이름입니다. `docs/sphinx-apidoc` 같은 경로는 없습니다.)
+
+```bash
+cd docs
+sphinx-apidoc -o source -f -M ../app
+```
+
+이후 `source/index.rst`의 `toctree`에 `modules`가 포함되어 있는지 확인하세요.
+
+### GitHub Pages (CI 배포)
+
+저장소에 `.github/workflows/docs-pages.yml`이 있으면 `main`에 푸시할 때 Sphinx를 빌드해 Pages에 올립니다. PR에서는 빌드만 하고 배포는 하지 않습니다.
+
+1. GitHub 저장소 **Settings → Pages**
+2. **Build and deployment** → **Source**를 **GitHub Actions**로 선택
+3. `main`에 머지/푸시 후 **Actions** 탭에서 워크플로가 성공하면 Pages URL(보통 `https://<user>.github.io/<repo>/`)에서 문서를 볼 수 있습니다. (첫 배포 후 1~2분 걸릴 수 있음)
+
+## 5. Flasgger (Swagger UI)
+
+`requirements.txt`에 `flasgger`가 포함되어 있습니다. 앱 실행 후 브라우저에서 다음을 엽니다.
+
+| URL | 설명 |
+| --- | --- |
+| `/apidocs/` | Swagger UI — 엔드포인트 설명 및 **Try it out** 으로 JSON API 호출 |
+| `/apispec_1.json` | 병합된 OpenAPI(Swagger 2.0) 스펙 |
+
+JSON API 예시: `GET /api/projects`, `GET /api/contact/channels`. OpenAPI(Swagger 2.0) 조각은 `app/blueprints/api.py` 뷰 **docstring** 안에서 `---` 아래 YAML로 적혀 있습니다. Sphinx HTML 문서를 빌드할 때는 `docs/source/conf.py`의 훅이 `---` 이후를 잘라 내어 reST 오류를 막습니다.
+
+테스트나 배포에서 Swagger를 끄려면 앱 설정에 `DISABLE_SWAGGER: True`를 넘기면 됩니다.
