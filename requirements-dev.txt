@@ -1,3 +1,7 @@
 # Development & TDD (install: pip install -r requirements-dev.txt)
 -r requirements.txt
 pytest>=8.0.0
+
+# Sphinx HTML docs (build: cd docs && sphinx-build -M html source build)
+sphinx>=8.0.0
+sphinx-rtd-theme>=3.0.0

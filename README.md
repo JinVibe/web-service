@@ -1,46 +1,91 @@
-# Dev-Log: Personal Tech Portfolio & Blog
+# Dev-Log — Personal Tech Portfolio & Blog
 
-Flask 기반 개인 포트폴리오·기술 블로그. **세 가지 기능(페이지)**: 홈, 프로젝트, 연락처.
+Flask 기반 **개인 포트폴리오·기술 블로그**입니다. 홈·프로젝트·연락처 화면에 더해 **JSON API**, **Swagger UI**, **Sphinx 기술 문서**, **GitHub Pages 배포**까지 한 흐름으로 보여 줄 수 있게 구성했습니다.
 
-**가상환경 + Pytest** 상세 절차는 [`docs/SETUP.md`](docs/SETUP.md)를 참고하세요.
+![Python](https://img.shields.io/badge/python-3.11+-3776AB?logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-3.x-000?logo=flask&logoColor=white)
+![pytest](https://img.shields.io/badge/tests-pytest-0A9EDC?logo=pytest&logoColor=white)
 
-## 프로젝트 설정 및 실행 (Lab Part 1)
+## 이 프로젝트로 보여 주는 것
+
+- **제품 감각**: 방문자가 바로 이해할 수 있는 내비게이션과 카드형 프로젝트 목록, 다크 톤 UI (`app/static/css/main.css`)
+- **유지보수**: Blueprint 분리, `site_data`로 JSON 콘텐츠 로딩, 연락처 표시 규칙 분리 (`contact_display`)
+- **품질**: README 명세(R1–R3)를 `pytest`로 고정하는 **TDD** 흐름 (`tests/`)
+- **문서화**: **Sphinx** autodoc + (선택) **GitHub Actions → Pages**, **Flasgger**로 API 스펙·Try-it-out
+
+## 스크린샷
+
+아래는 **벡터 미리보기**(실제 UI와 톤을 맞춘 플레이스홀더)입니다. 제출·포트폴리오용으로는 `docs/assets/README.md` 안내에 따라 **브라우저 캡처 PNG**로 바꾸는 것을 권장합니다.
+
+| 홈 `/home` | 프로젝트 `/projects` |
+| --- | --- |
+| ![홈 화면 미리보기](docs/assets/screenshot-home.svg) | ![프로젝트 목록 미리보기](docs/assets/screenshot-projects.svg) |
+
+| 연락처 `/contact` | API 문서 `/apidocs/` |
+| --- | --- |
+| ![연락처 미리보기](docs/assets/screenshot-contact.svg) | ![Swagger UI 미리보기](docs/assets/screenshot-apidocs.svg) |
+
+### 데모 GIF (선택)
+
+[ScreenToGif](https://www.screentogif.com/) 등으로 녹화해 `docs/assets/demo.gif`로 저장한 뒤, 이 섹션 아래에 다음 한 줄을 붙이면 됩니다.
+
+```markdown
+![데모 GIF](docs/assets/demo.gif)
+```
+
+## 문서 · 링크
+
+| 항목 | 링크 / 위치 |
+| --- | --- |
+| **환경 설정·Sphinx·Pages·Flasgger** | [`docs/SETUP.md`](docs/SETUP.md) |
+| **기술 문서 (Sphinx, 로컬)** | `docs/source/` → `sphinx-build -M html docs/source docs/build` → `docs/build/html/index.html` |
+| **기술 문서 (온라인)** | GitHub 저장소 **Settings → Pages**에서 Actions 배포 후 표시되는 URL (예: `https://<user>.github.io/<repo>/`) |
+| **REST API (JSON)** | `GET /api/projects`, `GET /api/contact/channels` |
+| **Swagger UI** | 서버 실행 후 브라우저에서 `/apidocs/` · OpenAPI JSON: `/apispec_1.json` |
+| **Docker** | 루트 [`Dockerfile`](Dockerfile) |
+
+## 빠른 시작
+
+전체 절차·트러블슈팅은 **[`docs/SETUP.md`](docs/SETUP.md)** 를 기준으로 합니다.
 
 ```bash
-# 가상환경 (권장) — 자세한 명령은 docs/SETUP.md
 python -m venv venv
 # Windows: .\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-pip install -r requirements-dev.txt   # Pytest 등 개발 의존성
+pip install -r requirements-dev.txt   # Pytest, Sphinx 등
 
-# 서버 실행 (권장: 진입점 wsgi — 패키지 app/ 과 이름 충돌 방지)
 flask --app wsgi run
-# 또는 환경 변수: FLASK_APP=wsgi.py 후 flask run
-# Lab 호환: FLASK_APP=app.py (app.py는 wsgi.app 과 동일 객체 재노출)
-python run.py
-# 로컬에서 디버그 리로더·상세 오류: FLASK_DEBUG=1 python run.py  (기본은 debug OFF)
+# 브라우저: http://127.0.0.1:5000/home
 ```
 
-**진입점 정리**
+**진입점**
 
 | 파일 | 역할 |
 | --- | --- |
-| **`app/`** (패키지) | `create_app`, Blueprint, 템플릿 등 애플리케이션 코드 |
-| **`wsgi.py`** | 권장: `app` 인스턴스 노출 (Docker·`FLASK_APP` 기본) |
-| **`app.py`** | Lab/기존 예제 호환: `wsgi`와 동일한 `app` 재노출 |
+| **`app/`** (패키지) | `create_app`, Blueprint, 템플릿, 정적 리소스 |
+| **`wsgi.py`** | 권장: `app` 인스턴스 (Docker·`FLASK_APP`) |
+| **`app.py`** | Lab 호환: `wsgi`와 동일 앱 재노출 |
+| **`run.py`** | 로컬 실행 래퍼 (디버그는 `FLASK_DEBUG=1` 등) |
 
-**로컬 검증 (curl)**
+**로컬 검증 (`curl`)**
 
 ```bash
-curl http://127.0.0.1:5000/
-curl http://127.0.0.1:5000/home
-curl http://127.0.0.1:5000/projects
-curl http://127.0.0.1:5000/contact
+curl -sI http://127.0.0.1:5000/          # → /home 리다이렉트
+curl -s http://127.0.0.1:5000/api/projects | head -c 200
+curl -s http://127.0.0.1:5000/apispec_1.json | head -c 120
 ```
 
-- **엔드포인트**: `/` (홈 리다이렉트), `/home`, `/projects`, `/contact`
-- **구조**: `wsgi.py`(권장 진입), `app.py`(Lab 호환 래퍼), `app/` 패키지, `app/bootstrap.py`에서 Blueprint 등록, 연락처 표시 규칙은 `app/contact_display.py`, 공통 스타일은 `app/static/css/main.css`, 기능별 `app/blueprints/`
-- **콘텐츠 데이터**: 프로젝트·연락처 목록은 `app/data/projects.json`, `app/data/contact.json`에서 읽는다 (`app/site_data.py`). 비속어 마스킹 단어 목록은 `app/data/profanity_words.json` (`mask_profanity`).
+**엔드포인트 요약**
+
+- **페이지**: `/` → `/home`, `/home`, `/projects`, `/contact`
+- **API**: `/api/projects`, `/api/contact/channels`
+- **문서 UI**: `/apidocs/`, `/apispec_1.json`
+
+**구조·데이터**
+
+- Blueprint 등록: `app/bootstrap.py` · 공통 스타일: `app/static/css/main.css`
+- 콘텐츠: `app/data/projects.json`, `app/data/contact.json` (`app/site_data.py`)
+- 비속어 마스킹: `app/data/profanity_words.json`, `app/profanity.py`
 
 ---
 

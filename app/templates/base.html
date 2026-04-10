@@ -11,6 +11,7 @@
         <a href="{{ url_for('home.index') }}">홈</a>
         <a href="{{ url_for('projects.list_projects') }}">프로젝트</a>
         <a href="{{ url_for('contact.index') }}">연락처</a>
+        <a href="{{ url_for('flasgger.apidocs') }}">API (Swagger)</a>
     </nav>
     <main>
         {% block content %}{% endblock %}
